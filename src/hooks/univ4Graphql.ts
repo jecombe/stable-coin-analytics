@@ -1,17 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { graphqlClient, STATS_QUERY, STATS_QUERY_ORDER } from "@/lib/graphql";
-interface Stats {
-  GlobalStats: {
-    id: string;
-    numberOfSwaps: string;
-    numberOfPools: string;
-  }[];
-  chain_metadata: {
-    chain_id: number;
-    latest_processed_block: number;
-  }[];
-}
+import { graphqlClient, STATS_QUERY_ORDER } from "@/lib/graphql";
 
 interface StatsOrder {
     GetGlobalStatsOverTime: {
