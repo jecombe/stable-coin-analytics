@@ -31,7 +31,7 @@ export default function Home() {
             Depeg for all chains for every hours
           </h2>
           <div className="w-full h-[500px]">
-            <StableCoinGraph data={stats} />
+            <StableCoinGraph chains={stats.chains} peggedAssets={stats.peggedAssets} />
           </div>
         </div>
 
@@ -40,7 +40,7 @@ export default function Home() {
             TVL for all chains all times
           </h2>
           <div className="w-full h-[500px]">
-            <StableTvl data={stats} />
+            <StableTvl chains={stats.chains} peggedAssets={stats.peggedAssets} />
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@ export default function Home() {
           StableCoin Price History in 1 year
         </h2>
         <div className="w-full h-[500px]">
-          <StableCoinHistoryGraph data={statsHistory} />
+          <StableCoinHistoryGraph history={statsHistory} />
         </div>
       </div>
     </div>

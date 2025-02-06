@@ -1,20 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
-interface Stats {
-  GlobalStats: {
-    id: string;
-    numberOfSwaps: string;
-    numberOfPools: string;
-  }[];
-  chain_metadata: {
-    chain_id: number;
-    latest_processed_block: number;
-  }[];
-}
+import { HistoryEntry, PropsInterface } from "@/interfaces/interface";
 
 export function HooksStableCoin() {
-  const [stats, setStats] = useState<Stats | null>(null);
+  const [stats, setStats] = useState<PropsInterface | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +39,7 @@ export function HooksStableCoin() {
 
 
 export function HooksStableCoinHistory() {
-  const [stats, setStats] = useState<Stats | null>(null);
+  const [stats, setStats] = useState<HistoryEntry[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {

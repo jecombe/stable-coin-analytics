@@ -1,4 +1,5 @@
 
+import { PropsInterface } from "@/interfaces/interface";
 import {
   BarChart,
   Bar,
@@ -12,7 +13,7 @@ import {
 
 const SKIP_STABLE = ["Zunami ETH", "Rai Reflex Index"];
 
-const formatNumber = (num) => {
+const formatNumber = (num: number) => {
   if (num >= 1_000_000_000) {
     return (num / 1_000_000_000).toFixed(2) + "B"; // Billion
   } else if (num >= 1_000_000) {
@@ -23,9 +24,9 @@ const formatNumber = (num) => {
   return `${num}`;
 };
 
-const StableTvl = ({ data }) => {
+const StableTvl = ({ chains }: PropsInterface) => {
 
-  const chartData = data.chains
+  const chartData = chains
     .filter((item) => item.tokenSymbol && !SKIP_STABLE.includes(item.name))
     .map((item) => ({
       name: item.name,
@@ -49,7 +50,7 @@ const StableTvl = ({ data }) => {
           />
           <Tooltip
             contentStyle={{ backgroundColor: "#1e293b", color: "#fff" }}
-            formatter={(value) => formatNumber(value)}
+            formatter={(value) => formatNumber(Number(value))}
           />
           <Bar yAxisId="right" dataKey="tvl" fill="#82ca9d" />
           <Brush
@@ -57,7 +58,6 @@ const StableTvl = ({ data }) => {
             height={30}
             stroke="#8884d8"
             travellerWidth={10}
-            margin={{ top: 10 }}
           />
         </BarChart>
       </ResponsiveContainer>

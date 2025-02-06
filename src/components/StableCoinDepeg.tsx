@@ -1,3 +1,4 @@
+import { PropsInterface } from "@/interfaces/interface";
 import React from "react";
 import {
   LineChart,
@@ -31,12 +32,12 @@ const cssStyles = `
 
 const SKIP_STABLE = ["Zunami ETH", "Rai Reflex Index"];
 
-const StableCoinGraph = ({ data }) => {
-  if (!data || !data.peggedAssets) {
+const StableCoinGraph = ({ chains, peggedAssets }: PropsInterface) => {
+  if (!chains || !peggedAssets) {
     return <p className="text-center text-white">Aucune donnée disponible</p>;
   }
 
-  const chartData = data.peggedAssets
+  const chartData = peggedAssets
     .filter((item) => item.price)
     .filter((item) => item.name && !SKIP_STABLE.includes(item.name))
     .map((item) => ({
@@ -97,7 +98,6 @@ const StableCoinGraph = ({ data }) => {
             height={30}
             stroke="#8884d8"
             travellerWidth={10}
-            margin={{ top: 10 }}
           />
         </LineChart>
       </ResponsiveContainer>

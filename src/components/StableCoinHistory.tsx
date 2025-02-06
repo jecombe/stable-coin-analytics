@@ -1,3 +1,4 @@
+import { PropsInterfaceHistory } from "@/interfaces/interface";
 import React from "react";
 import {
   LineChart,
@@ -32,13 +33,23 @@ const cssStyles = `
   }
 `;
 
-const CustomTooltip = ({ payload, label }) => {
+interface TooltipEntry {
+  name: string;
+  value: number;
+}
+
+interface CustomTooltipProps {
+  payload: TooltipEntry[];  // Tableau d'objets avec `name` et `value`
+  label: string;             // Le label pour afficher la date
+}
+
+const CustomTooltip = ({ payload, label }: CustomTooltipProps) => {
   if (!payload || payload.length === 0) return null;
 
   return (
     <div className="custom-tooltip">
       <p>{`Date: ${label}`}</p>
-      {payload.map((entry, index) => (
+      {payload.map((entry: TooltipEntry, index: number) => (
         <p key={index}>
           {entry.name}: {entry.value}
         </p>
@@ -47,25 +58,34 @@ const CustomTooltip = ({ payload, label }) => {
   );
 };
 
-const StableCoinHistoryGraph = ({ data }) => {
-  if (!data || data.length === 0) {
+const StableCoinHistoryGraph = ({ history }: PropsInterfaceHistory) => {
+  console.log(history);
+  
+  if (!history || history.length === 0) {
     return <p className="text-center text-white">Aucune donnée disponible</p>;
   }
 
   const oneYearAgo = new Date();
   oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
-  const stablecoinNames = Object.keys(data[1].prices);
+  const stablecoinNames = Object.keys(history[1].prices);
 
-  const filteredData = data.filter((entry) => {
+  const filteredData = history.filter((entry) => {
     const entryDate = new Date(entry.date * 1000);
     return entryDate >= oneYearAgo;
   });
 
+  // Définir le type pour `formattedEntry`
+  interface FormattedEntry {
+    date: string;
+    [key: string]: string | number; // Permet d'ajouter dynamiquement des propriétés dont la clé est une chaîne
+  }
+
   const chartData = filteredData.map((entry) => {
-    const formattedEntry = {
+    const formattedEntry: FormattedEntry = {
       date: new Date(entry.date * 1000).toLocaleDateString(),
     };
+
     stablecoinNames.forEach((coin) => {
       formattedEntry[coin] = entry.prices[coin];
     });
@@ -86,7 +106,11 @@ const StableCoinHistoryGraph = ({ data }) => {
             yAxisId="right"
             orientation="right"
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#8884d8", strokeWidth: 2 }} wrapperStyle={{ zIndex: 1000 }} /> 
+          <Tooltip
+            content={<CustomTooltip payload={[]} label={""} />}
+            cursor={{ stroke: "#8884d8", strokeWidth: 2 }}
+            wrapperStyle={{ zIndex: 1000 }}
+          />
 
           {stablecoinNames.map((coin, index) => (
             <Line
@@ -96,6 +120,7 @@ const StableCoinHistoryGraph = ({ data }) => {
               dataKey={coin}
               stroke={`hsl(${(index * 60) % 360}, 70%, 50%)`}
               strokeWidth={2}
+              dot={false}
             />
           ))}
           <Brush dataKey="date" height={30} stroke="#8884d8" />
