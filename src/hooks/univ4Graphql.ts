@@ -23,40 +23,6 @@ interface StatsOrder {
     }[];
   }
 
-export function Univ4Graph() {
-  const [stats, setStats] = useState<Stats | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-       //const data = await graphqlClient.request<Stats>(STATS_QUERY);
-       const response = await graphqlClient.request<Stats>(STATS_QUERY, {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-        }
-      }); 
-     /*  const response = await axios.post("https://cors-anywhere.herokuapp.com/https://indexer.dev.hyperindex.xyz/bdd91b0/v1/graphql", {
-        query: STATS_QUERY
-      });*/
-      
-       // setStats(response);
-      } catch (error) {
-        console.log("pppppppppppppppppp",error);
-      }
-    };
-
-    // Initial fetch
-    fetchData();
-
-    // Poll every 250 milliseconds
-    const interval = setInterval(fetchData, 100000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return stats;
-}
-
 export function Univ4GraphOrder() {
     const [stats, setStats] = useState<StatsOrder | null>(null);
   

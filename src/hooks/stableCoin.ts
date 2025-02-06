@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { graphqlClient, STATS_QUERY, STATS_QUERY_ORDER } from "@/lib/graphql";
 import axios from "axios";
 interface Stats {
   GlobalStats: {
@@ -13,16 +12,6 @@ interface Stats {
     latest_processed_block: number;
   }[];
 }
-
-interface StatsOrder {
-    GetGlobalStatsOverTime: {
-      id: string;
-      db_write_timestamp: Date;
-      numberOfPools: string;
-      numberOfSwap: string;
-
-    }[];
-  }
 
 export function HooksStableCoin() {
   const [stats, setStats] = useState<Stats | null>(null);

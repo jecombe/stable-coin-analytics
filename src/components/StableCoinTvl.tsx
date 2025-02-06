@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+
 import {
   BarChart,
   Bar,
@@ -24,11 +24,6 @@ const formatNumber = (num) => {
 };
 
 const StableTvl = ({ data }) => {
-  const [brushIndex, setBrushIndex] = useState([0, 0]);
-
-  useEffect(() => {
-    console.log(brushIndex);
-  }, [data]);
 
   const chartData = data.chains
     .filter((item) => item.tokenSymbol && !SKIP_STABLE.includes(item.name))

@@ -10,14 +10,7 @@ import {
   Brush,
 } from "recharts";
 
-// CSS pour l'animation de clignotement
-const styles = {
-  dotClignote: {
-    animation: "clignoter 1s infinite",
-  },
-};
 
-// Définir une animation de clignotement en CSS
 const cssStyles = `
   @keyframes clignoter {
     0% {
@@ -82,7 +75,7 @@ const StableCoinGraph = ({ data }) => {
             dataKey="price"
             stroke="none"
             dot={(props) => {
-              const { cx, cy, value, index } = props;
+              const { cx, cy, index } = props;
               const item = chartData[index];
               const isDepegged =
                 item.price < 1 - tolerance || item.price > 1 + tolerance;
